@@ -9,23 +9,15 @@ from PIL import Image
 import numpy as np
 import math
 
-<<<<<<< HEAD
 # Sourced from F_Fourier_Image_Low_Pass_Examples.m
 def low_pass(image, D0=30, n=2):
     cols = image.size[0]
     rows = image.size[1]
-=======
-def ideal_low_pass(image, cutoff=30):
->>>>>>> 47d352bd4a81fc2b1eb15a5b9dbc83facc377dec
     img = image.copy()
+    pxl = img.load()
 
-    # Image -> array for np manipulation
     img_array = np.array(img)
-    
-    f_transform = np.fft.fft2(img_array)
-    f_shift = np.fft.fftshift(f_transform)
 
-<<<<<<< HEAD
     # Fourier Transform of the Image
     fft = np.fft.fft2(img_array)
     fft_shifted = np.fft.fftshift(fft)
@@ -60,33 +52,9 @@ def ideal_low_pass(image, cutoff=30):
     gaussian_img.save('gaussian_dog.png')
     #butterworth_img.save('butterworth_dog.png')
 
-=======
-    rows, cols = img_array.shape
-    mask = np.zeros((rows, cols), np.uint8)
-    for i in range(rows):
-        for j in range(cols):
-            if np.sqrt((i - (rows // 2))**2 + (j - (cols // 2))**2) <= cutoff:
-                mask[i, j] = 1
-
-    f_shift_filtered = f_shift * mask
-
-    f_inverse_shift = np.fft.ifftshift(f_shift_filtered)
-    img_filtered = np.fft.ifft2(f_inverse_shift)
-    img_filtered = np.real(img_filtered)
-
-    img_filtered = (img_filtered - np.min(img_filtered)) / (np.max(img_filtered) - np.min(img_filtered)) * 255
-    img_filtered = np.uint8(img_filtered)
-    
-    return Image.fromarray(img_filtered)
->>>>>>> 47d352bd4a81fc2b1eb15a5b9dbc83facc377dec
 
 dog = Image.open('dog.png').convert('L')
 dog.save('grayscale_dog.png')
 
-<<<<<<< HEAD
 lowpass_dog = low_pass(dog)
-=======
-lowpass_dog = ideal_low_pass(dog)
-lowpass_dog.save('lowpass_dog.png')
->>>>>>> 47d352bd4a81fc2b1eb15a5b9dbc83facc377dec
 
