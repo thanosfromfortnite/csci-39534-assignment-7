@@ -46,15 +46,16 @@ def low_pass(image, D0=30, n=2):
     gaussian_img = ((gaussian_img - np.min(gaussian_img)) / (np.max(gaussian_img) - np.min(gaussian_img))) * 255
     gaussian_img = Image.fromarray(np.uint8(gaussian_img))
     
-    butterworth_img = np.real(np.fft.ifft2(np.fft.ifftshift(butterworth)))
+    butterworth_img = np.uint8(np.real(np.fft.ifft2(np.fft.ifftshift(butterworth))))
 
     ideal_img.save('ideal_dog.png')
     gaussian_img.save('gaussian_dog.png')
-    #butterworth_img.save('butterworth_dog.png')
+    butterworth_img = Image.fromarray(butterworth_img)
+    butterworth_img.save('butterworth_dog.png')
 
 
 dog = Image.open('dog.png').convert('L')
 dog.save('grayscale_dog.png')
 
-lowpass_dog = low_pass(dog)
+lowppass_dog = low_pass(dog)
 
